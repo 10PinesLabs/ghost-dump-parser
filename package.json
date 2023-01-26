@@ -1,0 +1,17 @@
+{
+  "name": "ghost-dump-parser",
+  "version": "0.0.1",
+  "description": "parse ghost export files and extract useful data",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx testy"
+  },
+  "keywords": [
+    "ghost"
+  ],
+  "author": "Nahuel Garbezza <n.garbezza@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@pmoo/testy": "^6.1.0"
+  }
+}
