@@ -18,4 +18,38 @@ suite('Ghost dump parser', () => {
     const parser = new GhostDumpParser(data)
     assert.that(parser.userNames()).isEqualTo(['Lionel Messi', 'Ángel Di María'])
   });
+
+  test('it reads featured image URLs from the posts section', () => {
+    const data = {
+      db: [
+        {
+          data: {
+            posts: [
+              { feature_image: 'https://example.org/1' },
+              { feature_image: 'https://example.org/2' },
+            ]
+          }
+        }
+      ]
+    }
+    const parser = new GhostDumpParser(data)
+    assert.that(parser.allImageUrls()).isEqualTo(['https://example.org/1', 'https://example.org/2'])
+  });
+
+  test('it skips null featured image URLs from the posts section', () => {
+    const data = {
+      db: [
+        {
+          data: {
+            posts: [
+              { feature_image: 'https://example.org/1' },
+              { feature_image: null },
+            ]
+          }
+        }
+      ]
+    }
+    const parser = new GhostDumpParser(data)
+    assert.that(parser.allImageUrls()).isEqualTo(['https://example.org/1'])
+  });
 });
