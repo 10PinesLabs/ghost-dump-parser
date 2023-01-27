@@ -5,6 +5,17 @@ const dbWithData = data => {
   return { db: [ { data } ] }
 }
 
+const postDefaults = {
+  id: 1,
+  title: 'How to win the world cup'
+}
+
+const aPost = () => aPostWith({})
+
+const aPostWith = (postAttributes) => {
+  return { ...postDefaults, ...postAttributes }
+}
+
 suite('Ghost dump parser', () => {
   test('it reads author names in the order they appear on the list', () => {
     const data = dbWithData({
@@ -37,5 +48,13 @@ suite('Ghost dump parser', () => {
     })
     const parser = new GhostDumpParser(data)
     assert.that(parser.allImageUrls()).isEqualTo(['https://example.org/1'])
+  });
+
+  test('it counts number of posts', () => {
+    const data = dbWithData({
+      posts: [aPost(), aPost(), aPost()]
+    })
+    const parser = new GhostDumpParser(data)
+    assert.that(parser.postsCount()).isEqualTo(3)
   });
 });
